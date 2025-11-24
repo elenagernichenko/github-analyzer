@@ -1,0 +1,171 @@
+{
+  "owner": "catboost",
+  "repo": "catboost",
+  "collected_at": "2025-11-24T09:06:13.810216+00:00",
+  "period_start": "2025-07-27",
+  "period_end": "2025-11-24",
+  "sample_size": 8,
+  "prs": [
+    {
+      "number": 2968,
+      "title": "Automatically disable staged install on Mac arm64",
+      "state": "open",
+      "html_url": "https://github.com/catboost/catboost/pull/2968",
+      "author": "jeroen",
+      "created_at": "2025-11-13T19:49:39+00:00",
+      "closed_at": null,
+      "merged_at": null,
+      "lifetime_hours": 253.28,
+      "first_response_at": "2025-11-14T16:35:46+00:00",
+      "first_response_hours": 20.77,
+      "issue_comment_count": 2,
+      "review_comment_count": 0,
+      "total_comment_count": 2,
+      "participants": [
+        "andrey-khropov",
+        "jeroen",
+        "topepo"
+      ]
+    },
+    {
+      "number": 2953,
+      "title": "Allow to use custom C++ objectives from python API classes CatBoostRegressor, CatBoostClassifier and CatBoostRanker",
+      "state": "open",
+      "html_url": "https://github.com/catboost/catboost/pull/2953",
+      "author": "isaigordeev",
+      "created_at": "2025-10-12T12:55:03+00:00",
+      "closed_at": null,
+      "merged_at": null,
+      "lifetime_hours": 1028.19,
+      "first_response_at": "2025-10-15T18:10:28+00:00",
+      "first_response_hours": 77.26,
+      "issue_comment_count": 1,
+      "review_comment_count": 5,
+      "total_comment_count": 6,
+      "participants": [
+        "andrey-khropov",
+        "isaigordeev"
+      ]
+    },
+    {
+      "number": 2951,
+      "title": "Fix Issue #2950",
+      "state": "open",
+      "html_url": "https://github.com/catboost/catboost/pull/2951",
+      "author": "Shersula",
+      "created_at": "2025-10-03T06:34:06+00:00",
+      "closed_at": null,
+      "merged_at": null,
+      "lifetime_hours": 1250.54,
+      "first_response_at": "2025-10-05T12:31:42+00:00",
+      "first_response_hours": 53.96,
+      "issue_comment_count": 5,
+      "review_comment_count": 0,
+      "total_comment_count": 5,
+      "participants": [
+        "Shersula",
+        "andrey-khropov"
+      ]
+    },
+    {
+      "number": 2945,
+      "title": "Fix Linux build failures caused by missing standard library linking",
+      "state": "open",
+      "html_url": "https://github.com/catboost/catboost/pull/2945",
+      "author": "szabolcsf",
+      "created_at": "2025-09-23T01:50:37+00:00",
+      "closed_at": null,
+      "merged_at": null,
+      "lifetime_hours": 1495.26,
+      "first_response_at": "2025-10-19T02:06:27+00:00",
+      "first_response_hours": 624.26,
+      "issue_comment_count": 1,
+      "review_comment_count": 0,
+      "total_comment_count": 1,
+      "participants": [
+        "andrey-khropov",
+        "szabolcsf"
+      ]
+    },
+    {
+      "number": 2929,
+      "title": "Add __repr__ method to CatBoost classes",
+      "state": "open",
+      "html_url": "https://github.com/catboost/catboost/pull/2929",
+      "author": "besteady",
+      "created_at": "2025-08-27T00:18:28+00:00",
+      "closed_at": null,
+      "merged_at": null,
+      "lifetime_hours": 2144.8,
+      "first_response_at": "2025-08-27T23:13:57+00:00",
+      "first_response_hours": 22.92,
+      "issue_comment_count": 2,
+      "review_comment_count": 0,
+      "total_comment_count": 2,
+      "participants": [
+        "andrey-khropov",
+        "besteady"
+      ]
+    },
+    {
+      "number": 2927,
+      "title": "Java binding for predict transposed",
+      "state": "closed",
+      "html_url": "https://github.com/catboost/catboost/pull/2927",
+      "author": "levs2001",
+      "created_at": "2025-08-15T07:29:20+00:00",
+      "closed_at": "2025-08-25T00:01:48+00:00",
+      "merged_at": null,
+      "lifetime_hours": 232.54,
+      "first_response_at": "2025-08-24T23:51:46+00:00",
+      "first_response_hours": 232.37,
+      "issue_comment_count": 2,
+      "review_comment_count": 0,
+      "total_comment_count": 2,
+      "participants": [
+        "levs2001",
+        "robot-magpie[bot]"
+      ]
+    },
+    {
+      "number": 2918,
+      "title": "Bump tqdm from 4.26.0 to 4.66.3 in /catboost/benchmarks/training_speed",
+      "state": "open",
+      "html_url": "https://github.com/catboost/catboost/pull/2918",
+      "author": "dependabot[bot]",
+      "created_at": "2025-08-06T11:34:59+00:00",
+      "closed_at": null,
+      "merged_at": null,
+      "lifetime_hours": 2637.52,
+      "first_response_at": "2025-08-08T21:28:16+00:00",
+      "first_response_hours": 57.89,
+      "issue_comment_count": 1,
+      "review_comment_count": 0,
+      "total_comment_count": 1,
+      "participants": [
+        "dependabot[bot]",
+        "robot-magpie[bot]"
+      ]
+    },
+    {
+      "number": 2917,
+      "title": "Bump postcss from 8.4.27 to 8.5.6 in /catboost/python-package/catboost/widget/js",
+      "state": "closed",
+      "html_url": "https://github.com/catboost/catboost/pull/2917",
+      "author": "dependabot[bot]",
+      "created_at": "2025-08-05T16:14:48+00:00",
+      "closed_at": "2025-08-06T13:04:27+00:00",
+      "merged_at": null,
+      "lifetime_hours": 20.83,
+      "first_response_at": "2025-08-06T12:06:42+00:00",
+      "first_response_hours": 19.86,
+      "issue_comment_count": 3,
+      "review_comment_count": 0,
+      "total_comment_count": 3,
+      "participants": [
+        "dependabot[bot]",
+        "robot-magpie[bot]"
+      ]
+    }
+  ]
+}

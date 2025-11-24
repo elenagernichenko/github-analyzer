@@ -1,0 +1,8 @@
+.env
+.github/
+__pycache__/
+*.pyc
+github-mcp/.env
+github-mcp/data/
+github-mcp/bin/
+github-mcp/github-mcp-server/
