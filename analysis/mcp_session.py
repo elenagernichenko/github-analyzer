@@ -1,10 +1,3 @@
-"""
-Utility helpers for talking to GitHub MCP Server over stdio via Docker.
-
-The module keeps the implementation Python-first: we spawn the official Docker
-image (Go binary stays inside the container) and communicate with it using the
-JSON-RPC protocol defined by MCP.
-"""
 
 from __future__ import annotations
 

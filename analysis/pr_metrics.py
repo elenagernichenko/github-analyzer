@@ -1,6 +1,4 @@
-"""
-Calculate social-technical PR metrics for catboost repo via GitHub MCP Server.
-"""
+
 
 from __future__ import annotations
 
