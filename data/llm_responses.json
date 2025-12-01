@@ -1,590 +1,466 @@
 {
   "mistralai/mistral-tiny": {
-    "raw_response": "{\n  \"avg_first_comment_hours\": 180.71,\n  \"user_roles\": [\n    {\n      \"username\": \"marcomq\",\n      \"role\": \"Периферийного участия\",\n      \"reason\": \"создал 1 PR и не участвовал в комментариях других PR\"\n    },\n    {\n      \"username\": \"jeroen\",\n      \"role\": \"Активного соисполнительства\",\n      \"reason\": \"создал 1 PR и участвовал в комментариях других PR\"\n    },\n    {\n      \"username\": \"isaigordeev\",\n      \"role\": \"Активного соисполнительства\",\n      \"reason\": \"создал 1 PR и участвовал в комментариях других PR\"\n    },\n    {\n      \"username\": \"Shersula\",\n      \"role\": \"Активного соисполнительства\",\n      \"reason\": \"создал 1 PR и участвовал в комментариях других PR\"\n    },\n    {\n      \"username\": \"szabolcsf\",\n      \"role\": \"Активного соисполнительства\",\n      \"reason\": \"создал 1 PR и участвовал в комментариях других PR\"\n    },\n    {\n      \"username\": \"besteady\",\n      \"role\": \"Активного соисполнительства\",\n      \"reason\": \"создал 1 PR и участвовал в комментариях других PR\"\n    },\n    {\n      \"username\": \"levs2001\",\n      \"role\": \"Периферийного участия\",\n      \"reason\": \"создал 1 PR и участвовал в комментариях других PR\"\n    },\n    {\n      \"username\": \"robot-magpie[bot]\",\n      \"role\": \"Кураторства и управления\",\n      \"reason\": \"много ревью, мало PR\"\n    },\n    {\n      \"username\": \"dependabot[bot]\",\n      \"role\": \"Пассивного потребления\",\n      \"reason\": \"только создание PR\"\n    }\n  ],\n  \"role_distribution\": {\n    \"Пассивного потребления\": 1,\n    \"Периферийного участия\": 3,\n    \"Инициации обратной связи\": 0,\n    \"Активного соисполнительства\": 5,\n    \"Кураторства и управления\": 1,\n    \"Лидерства и наставничества\": 0,\n    \"Социального влияния\": 0\n  }\n}",
+    "raw_response": "{\n  \"avg_first_comment_hours\": 163.875,\n  \"user_roles\": [\n    {\n      \"username\": \"dependabot[bot]\",\n      \"pattern\": \"Пассивного потребления\",\n      \"role\": \"Lurkers\"\n    },\n    {\n      \"username\": \"robot-magpie[bot]\",\n      \"pattern\": \"Пассивного потребления\",\n      \"role\": \"Lurkers\"\n    },\n    {\n      \"username\": \"marcomq\",\n      \"pattern\": \"Периферийного участия\",\n      \"role\": \"Peripheral developer\"\n    },\n    {\n      \"username\": \"jeroen\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"isaigordeev\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"Shersula\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"szabolcsf\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"besteady\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"levs2001\",\n      \"pattern\": \"Периферийного участия\",\n      \"role\": \"Peripheral developer\"\n    }\n  ],\n  \"role_distribution\": {\n    \"Пассивного потребления\": 2,\n    \"Периферийного участия\": 2,\n    \"Активного соисполнительства\": 6\n  }\n}",
     "parsed_result": {
-      "avg_first_comment_hours": 180.71,
+      "avg_first_comment_hours": 163.875,
       "user_roles": [
         {
-          "username": "marcomq",
-          "role": "Периферийного участия",
-          "reason": "создал 1 PR и не участвовал в комментариях других PR"
-        },
-        {
-          "username": "jeroen",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях других PR"
-        },
-        {
-          "username": "isaigordeev",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях других PR"
-        },
-        {
-          "username": "Shersula",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях других PR"
-        },
-        {
-          "username": "szabolcsf",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях других PR"
-        },
-        {
-          "username": "besteady",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях других PR"
-        },
-        {
-          "username": "levs2001",
-          "role": "Периферийного участия",
-          "reason": "создал 1 PR и участвовал в комментариях других PR"
+          "username": "dependabot[bot]",
+          "pattern": "Пассивного потребления",
+          "role": "Lurkers"
         },
         {
           "username": "robot-magpie[bot]",
-          "role": "Кураторства и управления",
-          "reason": "много ревью, мало PR"
+          "pattern": "Пассивного потребления",
+          "role": "Lurkers"
         },
         {
-          "username": "dependabot[bot]",
-          "role": "Пассивного потребления",
-          "reason": "только создание PR"
+          "username": "marcomq",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "jeroen",
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
+        },
+        {
+          "username": "isaigordeev",
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
+        },
+        {
+          "username": "Shersula",
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
+        },
+        {
+          "username": "szabolcsf",
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
+        },
+        {
+          "username": "besteady",
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
+        },
+        {
+          "username": "levs2001",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
         }
       ],
       "role_distribution": {
-        "Пассивного потребления": 1,
-        "Периферийного участия": 3,
-        "Инициации обратной связи": 0,
-        "Активного соисполнительства": 5,
-        "Кураторства и управления": 1,
-        "Лидерства и наставничества": 0,
-        "Социального влияния": 0
+        "Пассивного потребления": 2,
+        "Периферийного участия": 2,
+        "Активного соисполнительства": 6
       }
     },
     "user_roles": [
       {
-        "username": "marcomq",
-        "role": "Периферийного участия",
-        "reason": "создал 1 PR и не участвовал в комментариях других PR"
-      },
-      {
-        "username": "jeroen",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях других PR"
-      },
-      {
-        "username": "isaigordeev",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях других PR"
-      },
-      {
-        "username": "Shersula",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях других PR"
-      },
-      {
-        "username": "szabolcsf",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях других PR"
-      },
-      {
-        "username": "besteady",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях других PR"
-      },
-      {
-        "username": "levs2001",
-        "role": "Периферийного участия",
-        "reason": "создал 1 PR и участвовал в комментариях других PR"
+        "username": "dependabot[bot]",
+        "pattern": "Пассивного потребления",
+        "role": "Lurkers"
       },
       {
         "username": "robot-magpie[bot]",
-        "role": "Кураторства и управления",
-        "reason": "много ревью, мало PR"
+        "pattern": "Пассивного потребления",
+        "role": "Lurkers"
       },
       {
-        "username": "dependabot[bot]",
-        "role": "Пассивного потребления",
-        "reason": "только создание PR"
+        "username": "marcomq",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "jeroen",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "isaigordeev",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "Shersula",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "szabolcsf",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "besteady",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "levs2001",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       }
     ],
-    "timestamp": "2025-11-30T15:13:54.670599+00:00"
+    "timestamp": "2025-12-01T08:45:08.800901+00:00"
   },
   "meta-llama/llama-3.2-3b-instruct": {
-    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 134.33,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"role\": \"Пассивного потребления\", \"reason\": \"только создал PR\"},\n    {\"username\": \"jeroen\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR и участвовал в комментариях\"},\n    {\"username\": \"isaigordeev\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR и участвовал в комментариях\"},\n    {\"username\": \"Shersula\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR и участвовал в комментариях\"},\n    {\"username\": \"szabolcsf\", \"role\": \"Периферийного участия\", \"reason\": \"редкие контрибьюторы\"},\n    {\"username\": \"besteady\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR и участвовал в комментариях\"},\n    {\"username\": \"levs2001\", \"role\": \"Пассивного потребления\", \"reason\": \"только создал PR\"},\n    {\"username\": \"dependabot[bot]\", \"role\": \"Пассивного потребления\", \"reason\": \"только создал PR\"},\n    {\"username\": \"robot-magpie[bot]\", \"role\": \"Пассивного потребления\", \"reason\": \"только создал PR\"}\n  ],\n  \"role_distribution\": {\n    \"Активного соисполнительства\": 4,\n    \"Инициации обратной связи\": 1,\n    \"Периферийного участия\": 1,\n    \"Пассивного потребления\": 5,\n    \"Кураторства и управления\": 0,\n    \"Лидерства и наставничества\": 0,\n    \"Социального влияния\": 0\n  }\n}\n```",
+    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 134.4,\n  \"user_roles\": [\n    {\n      \"username\": \"marcomq\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"jeroen\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"isaigordeev\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"Shersula\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"szabolcsf\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"besteady\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"levs2001\",\n      \"pattern\": \"Пассивного потребления\",\n      \"role\": \"Lurker\"\n    },\n    {\n      \"username\": \"dependabot[bot]\",\n      \"pattern\": \"Пассивного потребления\",\n      \"role\": \"Rare contributor\"\n    },\n    {\n      \"username\": \"andrey-khropov\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    },\n    {\n      \"username\": \"topepo\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Active developer\"\n    }\n  ],\n  \"role_distribution\": {\n    \"Активного соисполнительства\": 8,\n    \"Кураторства и управления\": 1,\n    \"Пассивного потребления\": 2,\n    \"Лидерства и наставничества\": 0,\n    \"Социального влияния\": 0,\n    \"Инициации обратной связи\": 0,\n    \"Периферийного участия\": 0,\n    \"Активного соисполнительства\": 0,\n    \"Rare contributor\": 1,\n    \"Lurker\": 1,\n    \"Bug reporter\": 0,\n    \"Coordinator\": 1,\n    \"Peripheral developer\": 0,\n    \"Nomad Coder\": 0,\n    \"Independent\": 0,\n    \"Aspiring\": 0,\n    \"Bug fixer\": 0,\n    \"Code Warrior\": 0,\n    \"External contributors\": 0,\n    \"Internal collaborators\": 0,\n    \"Project steward\": 1,\n    \"Project leader\": 0,\n    \"Core member\": 0,\n    \"Core developer\": 0,\n    \"Project Rockstar\": 0\n  }\n}\n```",
     "parsed_result": {
-      "avg_first_comment_hours": 134.33,
+      "avg_first_comment_hours": 134.4,
       "user_roles": [
         {
           "username": "marcomq",
-          "role": "Пассивного потребления",
-          "reason": "только создал PR"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "jeroen",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "isaigordeev",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "Shersula",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "szabolcsf",
-          "role": "Периферийного участия",
-          "reason": "редкие контрибьюторы"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "besteady",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR и участвовал в комментариях"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "levs2001",
-          "role": "Пассивного потребления",
-          "reason": "только создал PR"
+          "pattern": "Пассивного потребления",
+          "role": "Lurker"
         },
         {
           "username": "dependabot[bot]",
-          "role": "Пассивного потребления",
-          "reason": "только создал PR"
-        },
-        {
-          "username": "robot-magpie[bot]",
-          "role": "Пассивного потребления",
-          "reason": "только создал PR"
-        }
-      ],
-      "role_distribution": {
-        "Активного соисполнительства": 4,
-        "Инициации обратной связи": 1,
-        "Периферийного участия": 1,
-        "Пассивного потребления": 5,
-        "Кураторства и управления": 0,
-        "Лидерства и наставничества": 0,
-        "Социального влияния": 0
-      }
-    },
-    "user_roles": [
-      {
-        "username": "marcomq",
-        "role": "Пассивного потребления",
-        "reason": "только создал PR"
-      },
-      {
-        "username": "jeroen",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях"
-      },
-      {
-        "username": "isaigordeev",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях"
-      },
-      {
-        "username": "Shersula",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях"
-      },
-      {
-        "username": "szabolcsf",
-        "role": "Периферийного участия",
-        "reason": "редкие контрибьюторы"
-      },
-      {
-        "username": "besteady",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR и участвовал в комментариях"
-      },
-      {
-        "username": "levs2001",
-        "role": "Пассивного потребления",
-        "reason": "только создал PR"
-      },
-      {
-        "username": "dependabot[bot]",
-        "role": "Пассивного потребления",
-        "reason": "только создал PR"
-      },
-      {
-        "username": "robot-magpie[bot]",
-        "role": "Пассивного потребления",
-        "reason": "только создал PR"
-      }
-    ],
-    "timestamp": "2025-11-30T15:14:22.798231+00:00"
-  },
-  "deepseek/deepseek-chat": {
-    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 138.66,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал PR без комментариев\"},\n    {\"username\": \"jeroen\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал PR и участвовал в комментариях\"},\n    {\"username\": \"isaigordeev\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал PR и участвовал в комментариях\"},\n    {\"username\": \"Shersula\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал PR и участвовал в комментариях\"},\n    {\"username\": \"szabolcsf\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал PR и участвовал в комментариях\"},\n    {\"username\": \"besteady\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал PR и участвовал в комментариях\"},\n    {\"username\": \"levs2001\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал PR и участвовал в комментариях\"},\n    {\"username\": \"dependabot[bot]\", \"role\": \"Периферийного участия\", \"reason\": \"создал PR, но низкая активность\"},\n    {\"username\": \"robot-magpie[bot]\", \"role\": \"Пассивного потребления\", \"reason\": \"только наблюдение\"},\n    {\"username\": \"andrey-khropov\", \"role\": \"Кураторства и управления\", \"reason\": \"много ревью, мало PR\"},\n    {\"username\": \"topepo\", \"role\": \"Инициации обратной связи\", \"reason\": \"только комментарии, без PR\"}\n  ],\n  \"role_distribution\": {\n    \"Активного соисполнительства\": 7,\n    \"Периферийного участия\": 1,\n    \"Пассивного потребления\": 1,\n    \"Кураторства и управления\": 1,\n    \"Инициации обратной связи\": 1\n  }\n}\n```",
-    "parsed_result": {
-      "avg_first_comment_hours": 138.66,
-      "user_roles": [
-        {
-          "username": "marcomq",
-          "role": "Активного соисполнительства",
-          "reason": "создал PR без комментариев"
-        },
-        {
-          "username": "jeroen",
-          "role": "Активного соисполнительства",
-          "reason": "создал PR и участвовал в комментариях"
-        },
-        {
-          "username": "isaigordeev",
-          "role": "Активного соисполнительства",
-          "reason": "создал PR и участвовал в комментариях"
-        },
-        {
-          "username": "Shersula",
-          "role": "Активного соисполнительства",
-          "reason": "создал PR и участвовал в комментариях"
-        },
-        {
-          "username": "szabolcsf",
-          "role": "Активного соисполнительства",
-          "reason": "создал PR и участвовал в комментариях"
-        },
-        {
-          "username": "besteady",
-          "role": "Активного соисполнительства",
-          "reason": "создал PR и участвовал в комментариях"
-        },
-        {
-          "username": "levs2001",
-          "role": "Активного соисполнительства",
-          "reason": "создал PR и участвовал в комментариях"
-        },
-        {
-          "username": "dependabot[bot]",
-          "role": "Периферийного участия",
-          "reason": "создал PR, но низкая активность"
-        },
-        {
-          "username": "robot-magpie[bot]",
-          "role": "Пассивного потребления",
-          "reason": "только наблюдение"
+          "pattern": "Пассивного потребления",
+          "role": "Rare contributor"
         },
         {
           "username": "andrey-khropov",
-          "role": "Кураторства и управления",
-          "reason": "много ревью, мало PR"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "topepo",
-          "role": "Инициации обратной связи",
-          "reason": "только комментарии, без PR"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         }
       ],
       "role_distribution": {
-        "Активного соисполнительства": 7,
-        "Периферийного участия": 1,
-        "Пассивного потребления": 1,
+        "Активного соисполнительства": 0,
         "Кураторства и управления": 1,
+        "Пассивного потребления": 2,
+        "Лидерства и наставничества": 0,
+        "Социального влияния": 0,
+        "Инициации обратной связи": 0,
+        "Периферийного участия": 0,
+        "Rare contributor": 1,
+        "Lurker": 1,
+        "Bug reporter": 0,
+        "Coordinator": 1,
+        "Peripheral developer": 0,
+        "Nomad Coder": 0,
+        "Independent": 0,
+        "Aspiring": 0,
+        "Bug fixer": 0,
+        "Code Warrior": 0,
+        "External contributors": 0,
+        "Internal collaborators": 0,
+        "Project steward": 1,
+        "Project leader": 0,
+        "Core member": 0,
+        "Core developer": 0,
+        "Project Rockstar": 0
+      }
+    },
+    "user_roles": [
+      {
+        "username": "marcomq",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "jeroen",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "isaigordeev",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "Shersula",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "szabolcsf",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "besteady",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "levs2001",
+        "pattern": "Пассивного потребления",
+        "role": "Lurker"
+      },
+      {
+        "username": "dependabot[bot]",
+        "pattern": "Пассивного потребления",
+        "role": "Rare contributor"
+      },
+      {
+        "username": "andrey-khropov",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      },
+      {
+        "username": "topepo",
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
+      }
+    ],
+    "timestamp": "2025-12-01T08:45:29.387356+00:00"
+  },
+  "deepseek/deepseek-chat": {
+    "raw_response": "{\"error\": \"402 Client Error: Payment Required for url: https://openrouter.ai/api/v1/chat/completions\"}",
+    "parsed_result": {
+      "error": "402 Client Error: Payment Required for url: https://openrouter.ai/api/v1/chat/completions"
+    },
+    "user_roles": [],
+    "timestamp": "2025-12-01T08:45:30.306838+00:00"
+  },
+  "qwen/qwen-2.5-7b-instruct": {
+    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 130.2,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"pattern\": \"Пассивного потребления\", \"role\": \"Lurker\"},\n    {\"username\": \"andrey-khropov\", \"pattern\": \"Кураторства и управления\", \"role\": \"Project steward\"},\n    {\"username\": \"isaigordeev\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"jeroen\", \"pattern\": \"Инициации обратной связи\", \"role\": \"Bug reporter\"},\n    {\"username\": \"Shersula\", \"pattern\": \"Периферийного участия\", \"role\": \"Rare contributor\"},\n    {\"username\": \"szabolcsf\", \"pattern\": \"Пассивного потребления\", \"role\": \"Lurker\"},\n    {\"username\": \"besteady\", \"pattern\": \"Пассивного потребления\", \"role\": \"Lurker\"},\n    {\"username\": \"levs2001\", \"pattern\": \"Пассивного потребления\", \"role\": \"Lurker\"},\n    {\"username\": \"robot-magpie[bot]\", \"pattern\": \"Пассивного потребления\", \"role\": \"Lurker\"},\n    {\"username\": \"dependabot[bot]\", \"pattern\": \"Пассивного потребления\", \"role\": \"Lurker\"}\n  ],\n  \"role_distribution\": {\n    \"Пассивного потребления\": 7,\n    \"Кураторства и управления\": 1,\n    \"Периферийного участия\": 2,\n    \"Инициации обратной связи\": 1\n  }\n}\n```",
+    "parsed_result": {
+      "avg_first_comment_hours": 130.2,
+      "user_roles": [
+        {
+          "username": "marcomq",
+          "pattern": "Пассивного потребления",
+          "role": "Lurker"
+        },
+        {
+          "username": "andrey-khropov",
+          "pattern": "Кураторства и управления",
+          "role": "Project steward"
+        },
+        {
+          "username": "isaigordeev",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "jeroen",
+          "pattern": "Инициации обратной связи",
+          "role": "Bug reporter"
+        },
+        {
+          "username": "Shersula",
+          "pattern": "Периферийного участия",
+          "role": "Rare contributor"
+        },
+        {
+          "username": "szabolcsf",
+          "pattern": "Пассивного потребления",
+          "role": "Lurker"
+        },
+        {
+          "username": "besteady",
+          "pattern": "Пассивного потребления",
+          "role": "Lurker"
+        },
+        {
+          "username": "levs2001",
+          "pattern": "Пассивного потребления",
+          "role": "Lurker"
+        },
+        {
+          "username": "robot-magpie[bot]",
+          "pattern": "Пассивного потребления",
+          "role": "Lurker"
+        },
+        {
+          "username": "dependabot[bot]",
+          "pattern": "Пассивного потребления",
+          "role": "Lurker"
+        }
+      ],
+      "role_distribution": {
+        "Пассивного потребления": 7,
+        "Кураторства и управления": 1,
+        "Периферийного участия": 2,
         "Инициации обратной связи": 1
       }
     },
     "user_roles": [
       {
         "username": "marcomq",
-        "role": "Активного соисполнительства",
-        "reason": "создал PR без комментариев"
-      },
-      {
-        "username": "jeroen",
-        "role": "Активного соисполнительства",
-        "reason": "создал PR и участвовал в комментариях"
-      },
-      {
-        "username": "isaigordeev",
-        "role": "Активного соисполнительства",
-        "reason": "создал PR и участвовал в комментариях"
-      },
-      {
-        "username": "Shersula",
-        "role": "Активного соисполнительства",
-        "reason": "создал PR и участвовал в комментариях"
-      },
-      {
-        "username": "szabolcsf",
-        "role": "Активного соисполнительства",
-        "reason": "создал PR и участвовал в комментариях"
-      },
-      {
-        "username": "besteady",
-        "role": "Активного соисполнительства",
-        "reason": "создал PR и участвовал в комментариях"
-      },
-      {
-        "username": "levs2001",
-        "role": "Активного соисполнительства",
-        "reason": "создал PR и участвовал в комментариях"
-      },
-      {
-        "username": "dependabot[bot]",
-        "role": "Периферийного участия",
-        "reason": "создал PR, но низкая активность"
-      },
-      {
-        "username": "robot-magpie[bot]",
-        "role": "Пассивного потребления",
-        "reason": "только наблюдение"
+        "pattern": "Пассивного потребления",
+        "role": "Lurker"
       },
       {
         "username": "andrey-khropov",
-        "role": "Кураторства и управления",
-        "reason": "много ревью, мало PR"
+        "pattern": "Кураторства и управления",
+        "role": "Project steward"
       },
       {
-        "username": "topepo",
-        "role": "Инициации обратной связи",
-        "reason": "только комментарии, без PR"
-      }
-    ],
-    "timestamp": "2025-11-30T15:14:36.927940+00:00"
-  },
-  "qwen/qwen-2.5-7b-instruct": {
-    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 138.66,\n  \"user_roles\": [\n    {\"username\": \"isaigordeev\", \"role\": \"Периферийного участия\", \"reason\": \"участник в одном PR с комментариями\"},\n    {\"username\": \"jeroen\", \"role\": \"Периферийного участия\", \"reason\": \"участник в одном PR с комментариями\"},\n    {\"username\": \"Shersula\", \"role\": \"Периферийного участия\", \"reason\": \"участник в одном PR с комментариями\"},\n    {\"username\": \"szabolcsf\", \"role\": \"Пассивного потребления\", \"reason\": \"участник в одном PR без комментариев\"},\n    {\"username\": \"besteady\", \"role\": \"Периферийного участия\", \"reason\": \"участник в одном PR с комментариями\"},\n    {\"username\": \"levs2001\", \"role\": \"Периферийного участия\", \"reason\": \"участник в одном PR с комментариями\"},\n    {\"username\": \"dependabot[bot]\", \"role\": \"Пассивного потребления\", \"reason\": \"автоматический бот без активного участия\"},\n    {\"username\": \"robot-magpie[bot]\", \"role\": \"Пассивного потребления\", \"reason\": \"автоматический бот без активного участия\"},\n    {\"username\": \"andrey-khropov\", \"role\": \"Кураторства и управления\", \"reason\": \"участвует в ревью и комментирует много PR\"}\n  ],\n  \"role_distribution\": {\n    \"Пассивного потребления\": 4,\n    \"Инициации обратной связи\": 0,\n    \"Периферийного участия\": 5,\n    \"Активного соисполнительства\": 1,\n    \"Кураторства и управления\": 1,\n    \"Лидерства и наставничества\": 0,\n    \"Социального влияния\": 0\n  }\n}\n```",
-    "parsed_result": {
-      "avg_first_comment_hours": 138.66,
-      "user_roles": [
-        {
-          "username": "isaigordeev",
-          "role": "Периферийного участия",
-          "reason": "участник в одном PR с комментариями"
-        },
-        {
-          "username": "jeroen",
-          "role": "Периферийного участия",
-          "reason": "участник в одном PR с комментариями"
-        },
-        {
-          "username": "Shersula",
-          "role": "Периферийного участия",
-          "reason": "участник в одном PR с комментариями"
-        },
-        {
-          "username": "szabolcsf",
-          "role": "Пассивного потребления",
-          "reason": "участник в одном PR без комментариев"
-        },
-        {
-          "username": "besteady",
-          "role": "Периферийного участия",
-          "reason": "участник в одном PR с комментариями"
-        },
-        {
-          "username": "levs2001",
-          "role": "Периферийного участия",
-          "reason": "участник в одном PR с комментариями"
-        },
-        {
-          "username": "dependabot[bot]",
-          "role": "Пассивного потребления",
-          "reason": "автоматический бот без активного участия"
-        },
-        {
-          "username": "robot-magpie[bot]",
-          "role": "Пассивного потребления",
-          "reason": "автоматический бот без активного участия"
-        },
-        {
-          "username": "andrey-khropov",
-          "role": "Кураторства и управления",
-          "reason": "участвует в ревью и комментирует много PR"
-        }
-      ],
-      "role_distribution": {
-        "Пассивного потребления": 4,
-        "Инициации обратной связи": 0,
-        "Периферийного участия": 5,
-        "Активного соисполнительства": 1,
-        "Кураторства и управления": 1,
-        "Лидерства и наставничества": 0,
-        "Социального влияния": 0
-      }
-    },
-    "user_roles": [
-      {
         "username": "isaigordeev",
-        "role": "Периферийного участия",
-        "reason": "участник в одном PR с комментариями"
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       },
       {
         "username": "jeroen",
-        "role": "Периферийного участия",
-        "reason": "участник в одном PR с комментариями"
+        "pattern": "Инициации обратной связи",
+        "role": "Bug reporter"
       },
       {
         "username": "Shersula",
-        "role": "Периферийного участия",
-        "reason": "участник в одном PR с комментариями"
+        "pattern": "Периферийного участия",
+        "role": "Rare contributor"
       },
       {
         "username": "szabolcsf",
-        "role": "Пассивного потребления",
-        "reason": "участник в одном PR без комментариев"
+        "pattern": "Пассивного потребления",
+        "role": "Lurker"
       },
       {
         "username": "besteady",
-        "role": "Периферийного участия",
-        "reason": "участник в одном PR с комментариями"
+        "pattern": "Пассивного потребления",
+        "role": "Lurker"
       },
       {
         "username": "levs2001",
-        "role": "Периферийного участия",
-        "reason": "участник в одном PR с комментариями"
-      },
-      {
-        "username": "dependabot[bot]",
-        "role": "Пассивного потребления",
-        "reason": "автоматический бот без активного участия"
+        "pattern": "Пассивного потребления",
+        "role": "Lurker"
       },
       {
         "username": "robot-magpie[bot]",
-        "role": "Пассивного потребления",
-        "reason": "автоматический бот без активного участия"
+        "pattern": "Пассивного потребления",
+        "role": "Lurker"
       },
       {
-        "username": "andrey-khropov",
-        "role": "Кураторства и управления",
-        "reason": "участвует в ревью и комментирует много PR"
+        "username": "dependabot[bot]",
+        "pattern": "Пассивного потребления",
+        "role": "Lurker"
       }
     ],
-    "timestamp": "2025-11-30T15:14:48.293112+00:00"
+    "timestamp": "2025-12-01T08:45:42.495503+00:00"
   },
   "anthropic/claude-3-haiku": {
-    "raw_response": "{\n  \"avg_first_comment_hours\": 138.66,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"role\": \"Пассивного потребления\", \"reason\": \"создал 1 PR без комментариев\"},\n    {\"username\": \"jeroen\", \"role\": \"Инициации обратной связи\", \"reason\": \"участвовал в 2 комментариях, без создания PR\"},\n    {\"username\": \"topepo\", \"role\": \"Инициации обратной связи\", \"reason\": \"участвовал в 1 комментарии, без создания PR\"},\n    {\"username\": \"andrey-khropov\", \"role\": \"Активного соисполнительства\", \"reason\": \"участвовал в 5 PR с комментариями\"},\n    {\"username\": \"isaigordeev\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR с 6 комментариями\"},\n    {\"username\": \"Shersula\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR с 5 комментариями\"},\n    {\"username\": \"szabolcsf\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR с 1 комментарием\"},\n    {\"username\": \"besteady\", \"role\": \"Активного соисполнительства\", \"reason\": \"создал 1 PR с 2 комментариями\"},\n    {\"username\": \"levs2001\", \"role\": \"Периферийного участия\", \"reason\": \"создал 1 PR с 2 комментариями\"},\n    {\"username\": \"robot-magpie[bot]\", \"role\": \"Инициации обратной связи\", \"reason\": \"участвовал в 3 комментариях, без создания PR\"},\n    {\"username\": \"dependabot[bot]\", \"role\": \"Инициации обратной связи\", \"reason\": \"участвовал в 4 комментариях, без создания PR\"}\n  ],\n  \"role_distribution\": {\n    \"Пассивного потребления\": 1,\n    \"Инициации обратной связи\": 4,\n    \"Периферийного участия\": 1,\n    \"Активного соисполнительства\": 5,\n    \"Кураторства и управления\": 0,\n    \"Лидерства и наставничества\": 0,\n    \"Социального влияния\": 0\n  }\n}",
+    "raw_response": "{\n  \"avg_first_comment_hours\": 130.2,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"jeroen\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"isaigordeev\", \"pattern\": \"Активного соисполнительства\", \"role\": \"Active developer\"},\n    {\"username\": \"Shersula\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"szabolcsf\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"besteady\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"levs2001\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"dependabot[bot]\", \"pattern\": \"Инициации обратной связи\", \"role\": \"Bug reporter\"}\n  ],\n  \"role_distribution\": {\n    \"Периферийного участия\": 6,\n    \"Активного соисполнительства\": 1,\n    \"Инициации обратной связи\": 1\n  }\n}",
     "parsed_result": {
-      "avg_first_comment_hours": 138.66,
+      "avg_first_comment_hours": 130.2,
       "user_roles": [
         {
           "username": "marcomq",
-          "role": "Пассивного потребления",
-          "reason": "создал 1 PR без комментариев"
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
         },
         {
           "username": "jeroen",
-          "role": "Инициации обратной связи",
-          "reason": "участвовал в 2 комментариях, без создания PR"
-        },
-        {
-          "username": "topepo",
-          "role": "Инициации обратной связи",
-          "reason": "участвовал в 1 комментарии, без создания PR"
-        },
-        {
-          "username": "andrey-khropov",
-          "role": "Активного соисполнительства",
-          "reason": "участвовал в 5 PR с комментариями"
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
         },
         {
           "username": "isaigordeev",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR с 6 комментариями"
+          "pattern": "Активного соисполнительства",
+          "role": "Active developer"
         },
         {
           "username": "Shersula",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR с 5 комментариями"
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
         },
         {
           "username": "szabolcsf",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR с 1 комментарием"
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
         },
         {
           "username": "besteady",
-          "role": "Активного соисполнительства",
-          "reason": "создал 1 PR с 2 комментариями"
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
         },
         {
           "username": "levs2001",
-          "role": "Периферийного участия",
-          "reason": "создал 1 PR с 2 комментариями"
-        },
-        {
-          "username": "robot-magpie[bot]",
-          "role": "Инициации обратной связи",
-          "reason": "участвовал в 3 комментариях, без создания PR"
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
         },
         {
           "username": "dependabot[bot]",
-          "role": "Инициации обратной связи",
-          "reason": "участвовал в 4 комментариях, без создания PR"
+          "pattern": "Инициации обратной связи",
+          "role": "Bug reporter"
         }
       ],
       "role_distribution": {
-        "Пассивного потребления": 1,
-        "Инициации обратной связи": 4,
-        "Периферийного участия": 1,
-        "Активного соисполнительства": 5,
-        "Кураторства и управления": 0,
-        "Лидерства и наставничества": 0,
-        "Социального влияния": 0
+        "Периферийного участия": 6,
+        "Активного соисполнительства": 1,
+        "Инициации обратной связи": 1
       }
     },
     "user_roles": [
       {
         "username": "marcomq",
-        "role": "Пассивного потребления",
-        "reason": "создал 1 PR без комментариев"
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       },
       {
         "username": "jeroen",
-        "role": "Инициации обратной связи",
-        "reason": "участвовал в 2 комментариях, без создания PR"
-      },
-      {
-        "username": "topepo",
-        "role": "Инициации обратной связи",
-        "reason": "участвовал в 1 комментарии, без создания PR"
-      },
-      {
-        "username": "andrey-khropov",
-        "role": "Активного соисполнительства",
-        "reason": "участвовал в 5 PR с комментариями"
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       },
       {
         "username": "isaigordeev",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR с 6 комментариями"
+        "pattern": "Активного соисполнительства",
+        "role": "Active developer"
       },
       {
         "username": "Shersula",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR с 5 комментариями"
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       },
       {
         "username": "szabolcsf",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR с 1 комментарием"
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       },
       {
         "username": "besteady",
-        "role": "Активного соисполнительства",
-        "reason": "создал 1 PR с 2 комментариями"
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       },
       {
         "username": "levs2001",
-        "role": "Периферийного участия",
-        "reason": "создал 1 PR с 2 комментариями"
-      },
-      {
-        "username": "robot-magpie[bot]",
-        "role": "Инициации обратной связи",
-        "reason": "участвовал в 3 комментариях, без создания PR"
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
       },
       {
         "username": "dependabot[bot]",
-        "role": "Инициации обратной связи",
-        "reason": "участвовал в 4 комментариях, без создания PR"
+        "pattern": "Инициации обратной связи",
+        "role": "Bug reporter"
       }
     ],
-    "timestamp": "2025-11-30T15:14:54.430774+00:00"
+    "timestamp": "2025-12-01T08:45:46.277882+00:00"
   }
 }

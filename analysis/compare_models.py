@@ -4,6 +4,7 @@ import json
 import math
 import os
 import time
+from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Dict, List
@@ -16,6 +17,7 @@ from llm_agent import LLMAgent
 from mcp_host import MCPHost
 from mcp_session import MCPDockerSession
 from metrics_calculator import calculate_metrics
+from role_classifier import classify_participant, classify_all_participants
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ENV_FILE = PROJECT_ROOT / "github-mcp" / ".env"
@@ -125,25 +127,34 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
    - Пример: если разницы [24, 48, 72] часа, то среднее = (24+48+72)/3 = 48 часов
    - Эталонное значение для проверки: примерно {ref_avg_temp} часов
 
-2. Классификация ролей участников:
-   - Для каждого уникального участника из всех PR определи его роль согласно паттернам:
-     * Пассивного потребления - минимальная активность, только наблюдение
-     * Инициации обратной связи - только комментарии, без создания PR
-     * Периферийного участия - редкие контрибьюторы
-     * Активного соисполнительства - регулярные контрибьюторы, создают PR
-     * Кураторства и управления - много ревью, мало PR
-     * Лидерства и наставничества - много PR и высокая активность
-     * Социального влияния - очень высокая активность
-   - Для каждого участника укажи: имя пользователя, присвоенную роль и краткое обоснование (на основе каких данных из PR)
+2. Классификация ролей участников по паттернам активности:
+   Анализируй активность каждого участника и определи паттерн и роль. ВАЖНО:
+   
+   Паттерны (русские названия категорий):
+   - "Пассивного потребления" - только наблюдение
+   - "Инициации обратной связи" - комментарии без PR
+   - "Периферийного участия" - эпизодическое участие
+   - "Активного соисполнительства" - регулярные PR
+   - "Кураторства и управления" - управление процессом
+   - "Лидерства и наставничества" - стратегическая роль
+   - "Социального влияния" - высокая видимость
+   
+   Роли (английские названия конкретных ролей):
+   - Lurkers, Passive user, Rare contributor
+   - Bug reporter, Coordinator
+   - Peripheral developer, Nomad Coder, Independent, Aspiring
+   - Bug fixer, Active developer, Issue fixer, Code Warrior, External contributors, Internal collaborators
+   - Project steward, Coordinator, Progress controller
+   - Project leader, Core member, Core developer
+   - Project Rockstar
+   
+   Для каждого участника: username, pattern (русское название паттерна), role (английское название конкретной роли)
 
-Верни JSON в формате:
+Верни JSON:
 {{
   "avg_first_comment_hours": число,
-  "user_roles": [
-    {{"username": "user1", "role": "Активного соисполнительства", "reason": "создал 2 PR и участвовал в комментариях"}},
-    {{"username": "user2", "role": "Инициации обратной связи", "reason": "только комментарии, без PR"}}
-  ],
-  "role_distribution": {{"категория": количество участников}}
+  "user_roles": [{{"username": "user", "pattern": "Кураторства и управления", "role": "Project steward"}}],
+  "role_distribution": {{"Кураторства и управления": количество, ...}}
 }}
 """
     
@@ -260,7 +271,32 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
     llm_avg = float(llm_result.get("avg_first_comment_hours", 0))
     error_pct = abs(llm_avg - ref_avg) / ref_avg * 100 if ref_avg > 0 and llm_avg > 0 else (100 if llm_avg == 0 else 0)
     llm_dist = llm_result.get("role_distribution", {})
-    user_roles = llm_result.get("user_roles", [])  # New: user-specific roles
+    user_roles = llm_result.get("user_roles", [])  # Contains pattern and role for each user
+    
+    # Normalize user_roles: support both old format (role/reason) and new format (pattern/role)
+    normalized_user_roles = []
+    for ur in user_roles:
+        # New format: pattern + role
+        if "pattern" in ur:
+            normalized_user_roles.append({
+                "username": ur.get("username", ""),
+                "pattern": ur.get("pattern", ""),
+                "role": ur.get("role", "")
+            })
+        # Old format: role (was pattern) + reason (was role)
+        elif "role" in ur and "reason" in ur:
+            normalized_user_roles.append({
+                "username": ur.get("username", ""),
+                "pattern": ur.get("role", ""),  # Old "role" was actually pattern
+                "role": ur.get("reason", "").replace(" паттерн", "").replace(" паттерн", "").strip()  # Old "reason" was actually role
+            })
+        elif "role" in ur:
+            # Fallback: assume role is pattern
+            normalized_user_roles.append({
+                "username": ur.get("username", ""),
+                "pattern": ur.get("role", ""),
+                "role": ""
+            })
     
     # Debug: log if parsing failed
     if llm_avg == 0 and len(llm_dist) == 0:
@@ -268,39 +304,71 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
 
     ref_dist = ref_metrics["role_distribution"]
 
-    # Calculate role classification correctness (simpler metric)
-    # Check if model correctly identified roles for users
+    # Role correctness: проверяет правильность определения паттернов пользователей
+    # Сравнивает паттерны, присвоенные LLM, с эталонными паттернами, вычисленными на основе данных репозитория
+    # 
+    # Эталонные паттерны вычисляются на основе активности пользователя:
+    # - prs_authored: количество PR, созданных пользователем
+    # - prs_reviewed: количество PR, отревьюенных пользователем
+    # - comments_count: количество комментариев
+    # - participation_rate, comment_rate: процент участия
+    #
+    # Метрика = (количество пользователей с правильным паттерном) / (общее количество пользователей) * 100%
+    
+    # Вычислить эталонные паттерны для всех пользователей
+    participants_stats: Dict[str, Dict[str, int]] = {}
+    total_prs = len(pr_data)
+    
+    for pr in pr_data:
+        author = pr.get("author", "")
+        if author:
+            if author not in participants_stats:
+                participants_stats[author] = {"authored": 0, "reviewed": 0, "comments": 0}
+            participants_stats[author]["authored"] += 1
+        
+        for comment in pr.get("issue_comments", []) + pr.get("review_comments", []):
+            user = comment.get("user", {}).get("login", "") if isinstance(comment, dict) else ""
+            if user and user != author:
+                if user not in participants_stats:
+                    participants_stats[user] = {"authored": 0, "reviewed": 0, "comments": 0}
+                participants_stats[user]["reviewed"] += 1
+                participants_stats[user]["comments"] += 1
+    
+    # Вычислить эталонный паттерн для каждого пользователя
+    reference_patterns: Dict[str, str] = {}
+    for username, stats in participants_stats.items():
+        ref_pattern = classify_participant(
+            username,
+            stats["authored"],
+            stats["reviewed"],
+            stats["comments"],
+            total_prs,
+        )
+        reference_patterns[username.lower()] = ref_pattern.lower()
+    
+    # Сравнить паттерны LLM с эталонными
     role_correctness = 0.0
-    if user_roles:
-        # Count how many users have valid roles (role matches expected patterns)
-        expected_categories = {
-            "Пассивного потребления", "Инициации обратной связи", "Периферийного участия",
-            "Активного соисполнительства", "Кураторства и управления",
-            "Лидерства и наставничества", "Социального влияния"
-        }
-        valid_roles = 0
-        for user_role in user_roles:
-            role_name = user_role.get("role", "")
-            # Check if role matches expected patterns
-            is_valid = False
-            for exp_cat in expected_categories:
-                if exp_cat.lower() in role_name.lower() or role_name.lower() in exp_cat.lower():
-                    is_valid = True
-                    break
-            if is_valid and user_role.get("username") and user_role.get("reason"):
-                valid_roles += 1
-        role_correctness = (valid_roles / len(user_roles)) * 100 if user_roles else 0
+    if normalized_user_roles:
+        correct = 0
+        total = 0
+        for ur in normalized_user_roles:
+            username = ur.get("username", "").lower()
+            llm_pattern = ur.get("pattern", "").lower()
+            if username and llm_pattern:
+                total += 1
+                ref_pattern = reference_patterns.get(username, "")
+                # Проверяем соответствие паттернов (гибкое сравнение)
+                if ref_pattern and (ref_pattern in llm_pattern or llm_pattern in ref_pattern):
+                    correct += 1
+        role_correctness = (correct / total * 100) if total > 0 else 0
     elif llm_dist:
-        # Fallback: if no user_roles but has distribution, check if categories are valid
-        expected_categories = {
-            "Пассивного потребления", "Инициации обратной связи", "Периферийного участия",
-            "Активного соисполнительства", "Кураторства и управления",
-            "Лидерства и наставничества", "Социального влияния"
-        }
-        valid_cats = sum(1 for cat in llm_dist.keys() 
-                        if any(exp_cat.lower() in cat.lower() or cat.lower() in exp_cat.lower() 
-                              for exp_cat in expected_categories))
-        role_correctness = (valid_cats / len(llm_dist)) * 100 if llm_dist else 0
+        # Fallback: если нет user_roles, проверяем только валидность названий паттернов
+        expected_patterns = {"Пассивного потребления", "Инициации обратной связи", "Периферийного участия",
+                             "Активного соисполнительства", "Кураторства и управления",
+                             "Лидерства и наставничества", "Социального влияния"}
+        valid = sum(1 for cat in llm_dist.keys() 
+                   if any(ep.lower() in cat.lower() for ep in expected_patterns))
+        role_correctness = (valid / len(llm_dist) * 100) if llm_dist else 0
     
     # Coverage: how many different role categories were found
     coverage = len(set(llm_dist.keys())) if llm_dist else 0
@@ -318,19 +386,18 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
     # If all values are 0, it means model didn't find participants (not inconsistency)
     total_participants = sum(llm_dist.values()) if llm_dist else len(user_roles) if user_roles else 0
     consistency = 100 if total_participants > 0 and (len(llm_dist) > 0 or len(user_roles) > 0) else 0
-    # Pattern compliance: check if categories match expected (flexible matching)
-    matched = 0
-    for cat in llm_dist.keys():
-        # Check exact match or partial match
-        if cat in expected_categories:
-            matched += 1
-        else:
-            # Check if any expected category is contained in the found category or vice versa
-            for exp_cat in expected_categories:
-                if exp_cat.lower() in cat.lower() or cat.lower() in exp_cat.lower():
-                    matched += 1
-                    break
-    pattern_compliance = matched / max(len(llm_dist), 1) * 100 if llm_dist else 0
+    # Pattern compliance: check if role names match expected patterns (Russian or English)
+    expected_categories = {
+        "Пассивного потребления", "Инициации обратной связи", "Периферийного участия",
+        "Активного соисполнительства", "Кураторства и управления",
+        "Лидерства и наставничества", "Социального влияния"
+    }
+    pattern_names = {"lurkers", "issues", "independent", "aspiring", "nomad", "external", "internal", 
+                    "bug fixer", "steward", "coordinator", "core", "leader", "rockstar"}
+    matched = sum(1 for cat in llm_dist.keys() 
+                 if any(e.lower() in cat.lower() for e in expected_categories) or
+                    any(p in cat.lower() for p in pattern_names))
+    pattern_compliance = (matched / len(llm_dist) * 100) if llm_dist else 0
 
     return {
         "model": model,
@@ -346,8 +413,64 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
         "ref_avg_hours": ref_avg,
         "raw_response": content,
         "parsed_result": llm_result,
-        "user_roles": user_roles,  # Save user-specific roles
+        "user_roles": normalized_user_roles,  # Save normalized user roles (pattern + role)
     }
+
+
+def calculate_inter_model_agreement(results: List[Dict]) -> Dict[str, float]:
+    """Calculate how consistently models assign patterns to the same users.
+    Упрощенная метрика: для каждой модели считаем, сколько раз она присвоила тот же паттерн,
+    что и другие модели, для одних и тех же пользователей.
+    
+    Метрика = (количество совпадений паттернов с другими моделями) / (общее количество сравнений) * 100%
+    """
+    # Collect all user-pattern assignments from all models
+    user_patterns: Dict[str, Dict[str, str]] = {}  # {username: {model: pattern}}
+    
+    for result in results:
+        model_name = result["model"].split("/")[-1]
+        user_roles = result.get("user_roles", [])
+        
+        for ur in user_roles:
+            username = ur.get("username", "").lower()
+            pattern = ur.get("pattern", "").lower()
+            if username and pattern:
+                if username not in user_patterns:
+                    user_patterns[username] = {}
+                user_patterns[username][model_name] = pattern
+    
+    # Calculate agreement for each model: count matches with other models
+    model_agreements: Dict[str, Dict[str, int]] = {}  # {model: {"matches": X, "total": Y}}
+    for result in results:
+        model_name = result["model"].split("/")[-1]
+        model_agreements[model_name] = {"matches": 0, "total": 0}
+    
+    # For each user, compare patterns between all models
+    for username, model_patterns in user_patterns.items():
+        if len(model_patterns) < 2:  # Need at least 2 models to compare
+            continue
+        
+        models = list(model_patterns.keys())
+        patterns = list(model_patterns.values())
+        
+        # Compare each model with all other models for this user
+        for i, model1 in enumerate(models):
+            pattern1 = patterns[i]
+            for j, model2 in enumerate(models):
+                if i != j:  # Don't compare model with itself
+                    model_agreements[model1]["total"] += 1
+                    if pattern1 == patterns[j]:  # Patterns match
+                        model_agreements[model1]["matches"] += 1
+    
+    # Calculate percentage agreement for each model
+    avg_agreements: Dict[str, float] = {}
+    for model_name, stats in model_agreements.items():
+        if stats["total"] > 0:
+            avg_agreements[model_name] = round((stats["matches"] / stats["total"]) * 100, 2)
+        else:
+            avg_agreements[model_name] = 0.0
+    
+    return avg_agreements
 
 
 def load_env_file(env_path: Path) -> Dict[str, str]:
@@ -408,6 +531,7 @@ def main():
                 "role_correctness": 0,
                 "consistency": 0,
                 "pattern_compliance": 0,
+                "inter_model_agreement": 0,
                 "time_seconds": 0,
                 "error": str(e),
             })
@@ -425,6 +549,14 @@ def main():
     # Save LLM responses separately
     responses_path = DATA_DIR / "llm_responses.json"
     responses_path.write_text(json.dumps(llm_responses, indent=2, ensure_ascii=False))
+    
+    # Calculate inter-model agreement: how consistently models assign patterns to the same users
+    inter_model_agreement = calculate_inter_model_agreement(results)
+    
+    # Add agreement metric to each result
+    for result in results:
+        model_name = result["model"].split("/")[-1]
+        result["inter_model_agreement"] = inter_model_agreement.get(model_name, 0.0)
 
     # Generate Excel with transposed layout (models as columns, metrics as rows)
     wb = openpyxl.Workbook()
@@ -440,6 +572,7 @@ def main():
         "Корректность классификации ролей: правильность определения ролей пользователей согласно паттернам (%)",
         "Консистентность классификации: стабильность логики распределения (%)",
         "Соответствие паттернам: использование правильных названий категорий (%)",
+        "Согласованность между моделями: насколько одинаково модели присваивают паттерны одним и тем же участникам (%)",
         "Время выполнения анализа (секунды)",
     ]
     
@@ -464,6 +597,7 @@ def main():
         [r.get("role_correctness", 0) for r in results],
         [r.get("consistency", 0) for r in results],
         [r.get("pattern_compliance", 0) for r in results],
+        [r.get("inter_model_agreement", 0) for r in results],
         [r.get("time_seconds", 0) for r in results],
     ]
     
