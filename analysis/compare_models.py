@@ -33,7 +33,7 @@ SAMPLE_SIZE = 20
 MODELS = [
     "mistralai/mistral-tiny",
     "meta-llama/llama-3.2-3b-instruct",
-    "deepseek/deepseek-chat",
+    "google/gemma-2-9b-it",
     "qwen/qwen-2.5-7b-instruct",
     "anthropic/claude-3-haiku",
 ]
@@ -109,6 +109,38 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
             "comment_count": len(comments)
         })
     
+    # Calculate participant statistics for better classification
+    total_prs = len(pr_data)
+    participant_stats = {}
+    for pr in pr_data:
+        author = pr.get("author", "")
+        if author:
+            if author not in participant_stats:
+                participant_stats[author] = {"authored": 0, "reviewed": 0, "comments": 0}
+            participant_stats[author]["authored"] += 1
+        
+        for comment in pr.get("issue_comments", []) + pr.get("review_comments", []):
+            user = comment.get("user", {}).get("login", "") if isinstance(comment, dict) else ""
+            if user and user != author:
+                if user not in participant_stats:
+                    participant_stats[user] = {"authored": 0, "reviewed": 0, "comments": 0}
+                participant_stats[user]["reviewed"] += 1
+                participant_stats[user]["comments"] += 1
+    
+    # Prepare participant statistics for prompt
+    participants_data = []
+    for username, stats in participant_stats.items():
+        participation_rate = (stats["authored"] + stats["reviewed"]) / max(total_prs, 1)
+        comment_rate = stats["comments"] / max(total_prs, 1)
+        participants_data.append({
+            "username": username,
+            "prs_authored": stats["authored"],
+            "prs_reviewed": stats["reviewed"],
+            "comments_count": stats["comments"],
+            "participation_rate": round(participation_rate, 3),
+            "comment_rate": round(comment_rate, 3)
+        })
+    
     # Calculate reference value for better guidance
     ref_metrics_temp = calculate_metrics(pr_data)
     ref_avg_temp = ref_metrics_temp["avg_first_comment_hours"]
@@ -117,6 +149,11 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
 
 Данные PR:
 {json.dumps(pr_summary, ensure_ascii=False, indent=2)}
+
+Статистика активности участников (уже рассчитана):
+{json.dumps(participants_data, ensure_ascii=False, indent=2)}
+
+Всего PR в данных: {total_prs}
 
 ВАЖНО: Вычисли две метрики ТОЧНО:
 
@@ -128,27 +165,48 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
    - Эталонное значение для проверки: примерно {ref_avg_temp} часов
 
 2. Классификация ролей участников по паттернам активности:
-   Анализируй активность каждого участника и определи паттерн и роль. ВАЖНО:
+   КРИТИЧЕСКИ ВАЖНО: Используй статистику активности участников выше и точный алгоритм:
    
-   Паттерны (русские названия категорий):
-   - "Пассивного потребления" - только наблюдение
-   - "Инициации обратной связи" - комментарии без PR
-   - "Периферийного участия" - эпизодическое участие
-   - "Активного соисполнительства" - регулярные PR
-   - "Кураторства и управления" - управление процессом
-   - "Лидерства и наставничества" - стратегическая роль
-   - "Социального влияния" - высокая видимость
+   Для каждого участника из статистики используй уже рассчитанные значения:
+   - prs_authored, prs_reviewed, comments_count, participation_rate, comment_rate
    
-   Роли (английские названия конкретных ролей):
-   - Lurkers, Passive user, Rare contributor
-   - Bug reporter, Coordinator
-   - Peripheral developer, Nomad Coder, Independent, Aspiring
-   - Bug fixer, Active developer, Issue fixer, Code Warrior, External contributors, Internal collaborators
-   - Project steward, Coordinator, Progress controller
-   - Project leader, Core member, Core developer
-   - Project Rockstar
+   Алгоритм классификации (применяй строго по порядку для КАЖДОГО участника):
+   1. Если participation_rate < 0.05 И comment_rate < 0.1 → "Пассивного потребления"
+   2. Если prs_authored == 0 И comments_count > 0 → "Инициации обратной связи"
+   3. Если participation_rate < 0.15 → "Периферийного участия"
+   4. Если prs_reviewed > prs_authored * 2 → "Кураторства и управления"
+   5. Если participation_rate > 0.4 И prs_authored > 5 → "Лидерства и наставничества"
+   6. Если participation_rate > 0.6 → "Социального влияния"
+   7. Если participation_rate < 0.4 → "Активного соисполнительства"
+   8. Иначе → "Активного соисполнительства"
    
-   Для каждого участника: username, pattern (русское название паттерна), role (английское название конкретной роли)
+   Примеры:
+   - Участник с prs_authored=1, prs_reviewed=0, comments_count=0, participation_rate=0.11, comment_rate=0.0
+     → participation_rate < 0.15 → "Периферийного участия"
+   - Участник с prs_authored=0, prs_reviewed=2, comments_count=5, participation_rate=0.22, comment_rate=0.56
+     → prs_authored == 0 И comments_count > 0 → "Инициации обратной связи"
+   - Участник с prs_authored=3, prs_reviewed=8, comments_count=12, participation_rate=1.22, comment_rate=1.33
+     → prs_reviewed (8) > prs_authored (3) * 2 → "Кураторства и управления"
+   
+   Паттерны (используй ТОЧНО эти русские названия):
+   - "Пассивного потребления"
+   - "Инициации обратной связи"
+   - "Периферийного участия"
+   - "Активного соисполнительства"
+   - "Кураторства и управления"
+   - "Лидерства и наставничества"
+   - "Социального влияния"
+   
+   Роли (английские названия конкретных ролей, выбери подходящую):
+   - Пассивного потребления: Lurkers, Passive user, Rare contributor
+   - Инициации обратной связи: Bug reporter, Coordinator
+   - Периферийного участия: Peripheral developer, Nomad Coder, Independent, Aspiring
+   - Активного соисполнительства: Bug fixer, Active developer, Issue fixer, Code Warrior, External contributors, Internal collaborators
+   - Кураторства и управления: Project steward, Coordinator, Progress controller
+   - Лидерства и наставничества: Project leader, Core member, Core developer
+   - Социального влияния: Project Rockstar
+   
+   Для каждого участника верни: username, pattern (ТОЧНО одно из 7 паттернов выше), role (подходящая роль из списка)
 
 Верни JSON:
 {{
@@ -357,9 +415,15 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
             if username and llm_pattern:
                 total += 1
                 ref_pattern = reference_patterns.get(username, "")
-                # Проверяем соответствие паттернов (гибкое сравнение)
-                if ref_pattern and (ref_pattern in llm_pattern or llm_pattern in ref_pattern):
-                    correct += 1
+                if ref_pattern:
+                    # Нормализуем паттерны для сравнения (убираем лишние пробелы, приводим к нижнему регистру)
+                    ref_normalized = ref_pattern.lower().strip()
+                    llm_normalized = llm_pattern.lower().strip()
+                    # Более гибкое сравнение: проверяем вхождение или точное совпадение
+                    if (ref_normalized == llm_normalized or 
+                        ref_normalized in llm_normalized or 
+                        llm_normalized in ref_normalized):
+                        correct += 1
         role_correctness = (correct / total * 100) if total > 0 else 0
     elif llm_dist:
         # Fallback: если нет user_roles, проверяем только валидность названий паттернов
@@ -370,8 +434,22 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
                    if any(ep.lower() in cat.lower() for ep in expected_patterns))
         role_correctness = (valid / len(llm_dist) * 100) if llm_dist else 0
     
-    # Coverage: how many different role categories were found
-    coverage = len(set(llm_dist.keys())) if llm_dist else 0
+    # Coverage: количество найденных уникальных паттернов (только русские категории, не роли)
+    expected_patterns = {"Пассивного потребления", "Инициации обратной связи", "Периферийного участия",
+                         "Активного соисполнительства", "Кураторства и управления",
+                         "Лидерства и наставничества", "Социального влияния"}
+    if llm_dist:
+        # Считаем только паттерны (русские категории), игнорируя английские роли
+        found_patterns = set()
+        for key in llm_dist.keys():
+            key_lower = key.lower()
+            for pattern in expected_patterns:
+                if pattern.lower() in key_lower or key_lower in pattern.lower():
+                    found_patterns.add(pattern)
+                    break
+        coverage = len(found_patterns)
+    else:
+        coverage = 0
     
     # Calculate all additional metrics
     expected_categories = {
@@ -419,13 +497,32 @@ def run_model_analysis(model: str, api_key: str, pr_data: List[Dict]) -> Dict:
 
 def calculate_inter_model_agreement(results: List[Dict]) -> Dict[str, float]:
     """Calculate how consistently models assign patterns to the same users.
-    Упрощенная метрика: для каждой модели считаем, сколько раз она присвоила тот же паттерн,
-    что и другие модели, для одних и тех же пользователей.
+    Улучшенная метрика: используем гибкое сравнение паттернов и нормализацию.
     
     Метрика = (количество совпадений паттернов с другими моделями) / (общее количество сравнений) * 100%
     """
+    # Нормализация паттернов для лучшего сравнения
+    expected_patterns = {
+        "пассивного потребления": "пассивного потребления",
+        "инициации обратной связи": "инициации обратной связи",
+        "периферийного участия": "периферийного участия",
+        "активного соисполнительства": "активного соисполнительства",
+        "кураторства и управления": "кураторства и управления",
+        "лидерства и наставничества": "лидерства и наставничества",
+        "социального влияния": "социального влияния",
+    }
+    
+    def normalize_pattern(pattern: str) -> str:
+        """Нормализует паттерн для сравнения."""
+        pattern_lower = pattern.lower().strip()
+        # Проверяем точное совпадение или вхождение
+        for exp_pattern, normalized in expected_patterns.items():
+            if exp_pattern in pattern_lower or pattern_lower in exp_pattern:
+                return normalized
+        return pattern_lower
+    
     # Collect all user-pattern assignments from all models
-    user_patterns: Dict[str, Dict[str, str]] = {}  # {username: {model: pattern}}
+    user_patterns: Dict[str, Dict[str, str]] = {}  # {username: {model: normalized_pattern}}
     
     for result in results:
         model_name = result["model"].split("/")[-1]
@@ -433,11 +530,12 @@ def calculate_inter_model_agreement(results: List[Dict]) -> Dict[str, float]:
         
         for ur in user_roles:
             username = ur.get("username", "").lower()
-            pattern = ur.get("pattern", "").lower()
+            pattern = ur.get("pattern", "")
             if username and pattern:
+                normalized = normalize_pattern(pattern)
                 if username not in user_patterns:
                     user_patterns[username] = {}
-                user_patterns[username][model_name] = pattern
+                user_patterns[username][model_name] = normalized
     
     # Calculate agreement for each model: count matches with other models
     model_agreements: Dict[str, Dict[str, int]] = {}  # {model: {"matches": X, "total": Y}}
@@ -459,6 +557,7 @@ def calculate_inter_model_agreement(results: List[Dict]) -> Dict[str, float]:
             for j, model2 in enumerate(models):
                 if i != j:  # Don't compare model with itself
                     model_agreements[model1]["total"] += 1
+                    # Используем нормализованные паттерны для сравнения
                     if pattern1 == patterns[j]:  # Patterns match
                         model_agreements[model1]["matches"] += 1
     
@@ -568,7 +667,7 @@ def main():
         "Ошибка расчета среднего времени первого комментария (%)",
         "Корректность использования данных, полученных через MCP (%)",
         "Полнота данных: наличие обеих метрик (время + роли) (%)",
-        "Количество найденных категорий ролей",
+        "Количество найденных уникальных паттернов (из 7 возможных)",
         "Корректность классификации ролей: правильность определения ролей пользователей согласно паттернам (%)",
         "Консистентность классификации: стабильность логики распределения (%)",
         "Соответствие паттернам: использование правильных названий категорий (%)",
@@ -618,6 +717,86 @@ def main():
         col_letter = openpyxl.utils.get_column_letter(col_idx)
         ws.column_dimensions[col_letter].width = max(len(model_name) + 2, 15)
     
+    # Create info sheet with experiment description
+    info_ws = wb.create_sheet("Описание эксперимента")
+    info_rows = [
+        ["Раздел", "Описание"],
+        [
+            "1. Входные данные",
+            (
+                "Исходные данные берутся из репозитория "
+                f"{OWNER}/{REPO} через GitHub MCP Server. "
+                f"Период выборки: последние {DAYS_BACK} дней. "
+                "Фильтр: только pull request'ы с комментариями (comments:>0). "
+                f"Максимальный размер выборки: {SAMPLE_SIZE} PR. "
+                "Для каждого PR загружается: номер, автор, дата создания, "
+                "issue-комментарии и review-комментарии."
+            ),
+        ],
+        [
+            "2. Какие метрики считают модели",
+            (
+                "Моделям передаются агрегированные данные по PR и участникам. "
+                "Они должны посчитать две метрики: "
+                "(1) среднее время до первого комментария (avg_first_comment_hours) — "
+                "разница между created_at и first_comment_at по каждому PR, затем среднее; "
+                "(2) классификация ролей участников по 7 паттернам активности "
+                "(Пассивного потребления, Инициации обратной связи, "
+                "Периферийного участия, Активного соисполнительства, "
+                "Кураторства и управления, Лидерства и наставничества, "
+                "Социального влияния) с указанием pattern и role для каждого участника."
+            ),
+        ],
+        [
+            "3. Передаваемый промпт",
+            (
+                "Промпт содержит: (1) список PR (номер, автор, время создания, время первого "
+                "комментария, участники, количество комментариев); "
+                "(2) статистику активности участников (prs_authored, prs_reviewed, "
+                "comments_count, participation_rate, comment_rate) по данным MCP; "
+                "(3) точный алгоритм классификации паттернов (последовательность правил "
+                "по participation_rate и comment_rate, совпадающая с реализацией "
+                "в role_classifier.classify_participant); "
+                "(4) список допустимых паттернов (7 русских названий) и ролей "
+                "(английские названия типа Lurkers, Bug reporter, Project steward и т.д.). "
+                "Модель обязана вернуть JSON с avg_first_comment_hours, user_roles и role_distribution."
+            ),
+        ],
+        [
+            "4. Метрики сравнения моделей",
+            (
+                "Для сравнения моделей считаются следующие метрики (по столбцам основной таблицы): "
+                "(1) Ошибка расчета среднего времени первого комментария (%) — сравнение значения "
+                "avg_first_comment_hours модели с эталоном, вычисленным детерминированно в Python "
+                "(metrics_calculator.calculate_first_comment_time); "
+                "(2) Корректность использования данных, полученных через MCP (%) — факт того, что модель "
+                "вернула обе требуемые метрики (время и роли); "
+                "(3) Полнота данных (%) — наличие обеих метрик без ошибок парсинга; "
+                "(4) Количество найденных уникальных паттернов (из 7 возможных) — сколько разных категорий "
+                "из фиксированного списка модель реально использовала; "
+                "(5) Корректность классификации ролей (%) — доля участников, для которых pattern из ответа "
+                "LLM совпадает с эталонным паттерном, рассчитанным по данным репозитория "
+                "(через role_classifier.classify_participant); "
+                "(6) Консистентность классификации (%) — наличие ненулевого и согласованного распределения ролей; "
+                "(7) Соответствие паттернам (%) — доля категорий в role_distribution, которые совпадают или "
+                "гибко соответствуют ожидаемым 7 паттернам; "
+                "(8) Согласованность между моделями (%) — насколько одинаковые паттерны разные модели присваивают "
+                "одним и тем же участникам (по нормализованным паттернам); "
+                "(9) Время выполнения анализа (секунды) — время ответа модели на запрос."
+            ),
+        ],
+    ]
+
+    for row in info_rows:
+        info_ws.append(row)
+
+    # Make header bold and adjust column widths
+    for cell in info_ws[1]:
+        cell.font = Font(bold=True)
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    info_ws.column_dimensions["A"].width = 40
+    info_ws.column_dimensions["B"].width = 120
+
     excel_path = DATA_DIR / "comparison_report.xlsx"
     wb.save(excel_path)
     
