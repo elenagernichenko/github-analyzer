@@ -1,0 +1,466 @@
+{
+  "mistralai/mistral-tiny": {
+    "raw_response": "{\n  \"avg_first_comment_hours\": 133.88,\n  \"user_roles\": [\n    {\n      \"username\": \"robot-magpie[bot]\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Internal collaborators\"\n    },\n    {\n      \"username\": \"dependabot[bot]\",\n      \"pattern\": \"Пассивного потребления\",\n      \"role\": \"Passive user\"\n    }\n  ],\n  \"role_distribution\": {\n    \"Пассивного потребления\": 2,\n    \"Активного соисполнительства\": 2\n  }\n}",
+    "parsed_result": {
+      "avg_first_comment_hours": 133.88,
+      "user_roles": [
+        {
+          "username": "robot-magpie[bot]",
+          "pattern": "Активного соисполнительства",
+          "role": "Internal collaborators"
+        },
+        {
+          "username": "dependabot[bot]",
+          "pattern": "Пассивного потребления",
+          "role": "Passive user"
+        }
+      ],
+      "role_distribution": {
+        "Пассивного потребления": 2,
+        "Активного соисполнительства": 2
+      }
+    },
+    "user_roles": [
+      {
+        "username": "robot-magpie[bot]",
+        "pattern": "Активного соисполнительства",
+        "role": "Internal collaborators"
+      },
+      {
+        "username": "dependabot[bot]",
+        "pattern": "Пассивного потребления",
+        "role": "Passive user"
+      }
+    ],
+    "timestamp": "2025-12-01T09:51:30.442366+00:00"
+  },
+  "meta-llama/llama-3.2-3b-instruct": {
+    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 64.2,\n  \"user_roles\": [\n    {\n      \"username\": \"andrey-khropov\",\n      \"pattern\": \"Социального влияния\",\n      \"role\": \"Project Rockstar\"\n    },\n    {\n      \"username\": \"robot-magpie[bot]\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Bug fixer\"\n    },\n    {\n      \"username\": \"dependabot[bot]\",\n      \"pattern\": \"Активного соисполнительства\",\n      \"role\": \"Bug fixer\"\n    }\n  ],\n  \"role_distribution\": {\n    \"Социального влияния\": 1,\n    \"Активного соисполнительства\": 2,\n    \"Активного соисполнительства\": 2\n  }\n}\n```",
+    "parsed_result": {
+      "avg_first_comment_hours": 64.2,
+      "user_roles": [
+        {
+          "username": "andrey-khropov",
+          "pattern": "Социального влияния",
+          "role": "Project Rockstar"
+        },
+        {
+          "username": "robot-magpie[bot]",
+          "pattern": "Активного соисполнительства",
+          "role": "Bug fixer"
+        },
+        {
+          "username": "dependabot[bot]",
+          "pattern": "Активного соисполнительства",
+          "role": "Bug fixer"
+        }
+      ],
+      "role_distribution": {
+        "Социального влияния": 1,
+        "Активного соисполнительства": 2
+      }
+    },
+    "user_roles": [
+      {
+        "username": "andrey-khropov",
+        "pattern": "Социального влияния",
+        "role": "Project Rockstar"
+      },
+      {
+        "username": "robot-magpie[bot]",
+        "pattern": "Активного соисполнительства",
+        "role": "Bug fixer"
+      },
+      {
+        "username": "dependabot[bot]",
+        "pattern": "Активного соисполнительства",
+        "role": "Bug fixer"
+      }
+    ],
+    "timestamp": "2025-12-01T09:51:33.720542+00:00"
+  },
+  "google/gemma-2-9b-it": {
+    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 130.2,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"jeroen\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"topepo\", \"pattern\": \"Инициации обратной связи\", \"role\": \"Bug reporter\"},\n    {\"username\": \"andrey-khropov\", \"pattern\": \"Кураторства и управления\", \"role\": \"Project steward\"},\n    {\"username\": \"isaigordeev\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"Shersula\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"szabolcsf\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"besteady\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"levs2001\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"robot-magpie[bot]\", \"pattern\": \"Инициации обратной связи\", \"role\": \"Bug reporter\"},\n    {\"username\": \"dependabot[bot]\", \"pattern\": \"Активного соисполнительства\", \"role\": \"Bug fixer\"}\n  ],\n  \"role_distribution\": {\n    \"Периферийного участия\": 7,\n    \"Инициации обратной связи\": 2,\n    \"Кураторства и управления\": 1,\n    \"Активного соисполнительства\": 1\n  }\n}\n```",
+    "parsed_result": {
+      "avg_first_comment_hours": 130.2,
+      "user_roles": [
+        {
+          "username": "marcomq",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "jeroen",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "topepo",
+          "pattern": "Инициации обратной связи",
+          "role": "Bug reporter"
+        },
+        {
+          "username": "andrey-khropov",
+          "pattern": "Кураторства и управления",
+          "role": "Project steward"
+        },
+        {
+          "username": "isaigordeev",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "Shersula",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "szabolcsf",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "besteady",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "levs2001",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "robot-magpie[bot]",
+          "pattern": "Инициации обратной связи",
+          "role": "Bug reporter"
+        },
+        {
+          "username": "dependabot[bot]",
+          "pattern": "Активного соисполнительства",
+          "role": "Bug fixer"
+        }
+      ],
+      "role_distribution": {
+        "Периферийного участия": 7,
+        "Инициации обратной связи": 2,
+        "Кураторства и управления": 1,
+        "Активного соисполнительства": 1
+      }
+    },
+    "user_roles": [
+      {
+        "username": "marcomq",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "jeroen",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "topepo",
+        "pattern": "Инициации обратной связи",
+        "role": "Bug reporter"
+      },
+      {
+        "username": "andrey-khropov",
+        "pattern": "Кураторства и управления",
+        "role": "Project steward"
+      },
+      {
+        "username": "isaigordeev",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "Shersula",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "szabolcsf",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "besteady",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "levs2001",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "robot-magpie[bot]",
+        "pattern": "Инициации обратной связи",
+        "role": "Bug reporter"
+      },
+      {
+        "username": "dependabot[bot]",
+        "pattern": "Активного соисполнительства",
+        "role": "Bug fixer"
+      }
+    ],
+    "timestamp": "2025-12-01T09:51:39.085173+00:00"
+  },
+  "qwen/qwen-2.5-7b-instruct": {
+    "raw_response": "```json\n{\n  \"avg_first_comment_hours\": 130.2,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"jeroen\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"topepo\", \"pattern\": \"Инициации обратной связи\", \"role\": \"Bug reporter\"},\n    {\"username\": \"andrey-khropov\", \"pattern\": \"Кураторства и управления\", \"role\": \"Project steward\"},\n    {\"username\": \"isaigordeev\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"Shersula\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"szabolcsf\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"besteady\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"levs2001\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"robot-magpie[bot]\", \"pattern\": \"Кураторства и управления\", \"role\": \"Progress controller\"},\n    {\"username\": \"dependabot[bot]\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"}\n  ],\n  \"role_distribution\": {\n    \"Периферийного участия\": 8,\n    \"Инициации обратной связи\": 1,\n    \"Кураторства и управления\": 2,\n    \"Лидерства и наставничества\": 0,\n    \"Социального влияния\": 0,\n    \"Пассивного потребления\": 0,\n    \"Активного соисполнительства\": 0\n  }\n}\n```",
+    "parsed_result": {
+      "avg_first_comment_hours": 130.2,
+      "user_roles": [
+        {
+          "username": "marcomq",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "jeroen",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "topepo",
+          "pattern": "Инициации обратной связи",
+          "role": "Bug reporter"
+        },
+        {
+          "username": "andrey-khropov",
+          "pattern": "Кураторства и управления",
+          "role": "Project steward"
+        },
+        {
+          "username": "isaigordeev",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "Shersula",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "szabolcsf",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "besteady",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "levs2001",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "robot-magpie[bot]",
+          "pattern": "Кураторства и управления",
+          "role": "Progress controller"
+        },
+        {
+          "username": "dependabot[bot]",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        }
+      ],
+      "role_distribution": {
+        "Периферийного участия": 8,
+        "Инициации обратной связи": 1,
+        "Кураторства и управления": 2,
+        "Лидерства и наставничества": 0,
+        "Социального влияния": 0,
+        "Пассивного потребления": 0,
+        "Активного соисполнительства": 0
+      }
+    },
+    "user_roles": [
+      {
+        "username": "marcomq",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "jeroen",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "topepo",
+        "pattern": "Инициации обратной связи",
+        "role": "Bug reporter"
+      },
+      {
+        "username": "andrey-khropov",
+        "pattern": "Кураторства и управления",
+        "role": "Project steward"
+      },
+      {
+        "username": "isaigordeev",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "Shersula",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "szabolcsf",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "besteady",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "levs2001",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "robot-magpie[bot]",
+        "pattern": "Кураторства и управления",
+        "role": "Progress controller"
+      },
+      {
+        "username": "dependabot[bot]",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      }
+    ],
+    "timestamp": "2025-12-01T09:51:49.482618+00:00"
+  },
+  "anthropic/claude-3-haiku": {
+    "raw_response": "{\n  \"avg_first_comment_hours\": 130.2,\n  \"user_roles\": [\n    {\"username\": \"marcomq\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"jeroen\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"topepo\", \"pattern\": \"Инициации обратной связи\", \"role\": \"Coordinator\"},\n    {\"username\": \"andrey-khropov\", \"pattern\": \"Кураторства и управления\", \"role\": \"Project steward\"},\n    {\"username\": \"isaigordeev\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"Shersula\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"szabolcsf\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"besteady\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"levs2001\", \"pattern\": \"Периферийного участия\", \"role\": \"Peripheral developer\"},\n    {\"username\": \"robot-magpie[bot]\", \"pattern\": \"Инициации обратной связи\", \"role\": \"Coordinator\"},\n    {\"username\": \"dependabot[bot]\", \"pattern\": \"Пассивного потребления\", \"role\": \"Lurkers\"}\n  ],\n  \"role_distribution\": {\n    \"Периферийного участия\": 8,\n    \"Инициации обратной связи\": 2,\n    \"Кураторства и управления\": 1,\n    \"Пассивного потребления\": 1\n  }\n}",
+    "parsed_result": {
+      "avg_first_comment_hours": 130.2,
+      "user_roles": [
+        {
+          "username": "marcomq",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "jeroen",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "topepo",
+          "pattern": "Инициации обратной связи",
+          "role": "Coordinator"
+        },
+        {
+          "username": "andrey-khropov",
+          "pattern": "Кураторства и управления",
+          "role": "Project steward"
+        },
+        {
+          "username": "isaigordeev",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "Shersula",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "szabolcsf",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "besteady",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "levs2001",
+          "pattern": "Периферийного участия",
+          "role": "Peripheral developer"
+        },
+        {
+          "username": "robot-magpie[bot]",
+          "pattern": "Инициации обратной связи",
+          "role": "Coordinator"
+        },
+        {
+          "username": "dependabot[bot]",
+          "pattern": "Пассивного потребления",
+          "role": "Lurkers"
+        }
+      ],
+      "role_distribution": {
+        "Периферийного участия": 8,
+        "Инициации обратной связи": 2,
+        "Кураторства и управления": 1,
+        "Пассивного потребления": 1
+      }
+    },
+    "user_roles": [
+      {
+        "username": "marcomq",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "jeroen",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "topepo",
+        "pattern": "Инициации обратной связи",
+        "role": "Coordinator"
+      },
+      {
+        "username": "andrey-khropov",
+        "pattern": "Кураторства и управления",
+        "role": "Project steward"
+      },
+      {
+        "username": "isaigordeev",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "Shersula",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "szabolcsf",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "besteady",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "levs2001",
+        "pattern": "Периферийного участия",
+        "role": "Peripheral developer"
+      },
+      {
+        "username": "robot-magpie[bot]",
+        "pattern": "Инициации обратной связи",
+        "role": "Coordinator"
+      },
+      {
+        "username": "dependabot[bot]",
+        "pattern": "Пассивного потребления",
+        "role": "Lurkers"
+      }
+    ],
+    "timestamp": "2025-12-01T09:51:53.683339+00:00"
+  }
+}
