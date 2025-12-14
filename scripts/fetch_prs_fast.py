@@ -42,7 +42,7 @@ def fetch_pr_list(owner: str, repo: str, per_page: int = 100, limit: int = 1000)
 
 
 def fetch_pr_details(pr: dict, owner: str, repo: str) -> dict:
-    """Fetch comments for a single PR and build record."""
+    """Fetch comments for a single PR and build record with comment texts."""
     num = pr["number"]
     issue_url = f"https://api.github.com/repos/{owner}/{repo}/issues/{num}/comments"
     review_url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{num}/comments"
@@ -59,14 +59,23 @@ def fetch_pr_details(pr: dict, owner: str, repo: str) -> dict:
     participants = set()
     author = (pr.get("user") or {}).get("login", "unknown")
     participants.add(author)
+    
+    # Собираем комментарии с текстами
+    comments = []
     for c in issue_comments or []:
         u = (c.get("user") or {}).get("login")
+        body = c.get("body", "")
         if u:
             participants.add(u)
+            if body and len(body.strip()) > 0:
+                comments.append({"user": u, "body": body.strip()[:1000], "type": "issue"})
     for c in review_comments or []:
         u = (c.get("user") or {}).get("login")
+        body = c.get("body", "")
         if u:
             participants.add(u)
+            if body and len(body.strip()) > 0:
+                comments.append({"user": u, "body": body.strip()[:1000], "type": "review"})
 
     return {
         "number": num,
@@ -82,6 +91,7 @@ def fetch_pr_details(pr: dict, owner: str, repo: str) -> dict:
         "review_comment_count": len(review_comments or []),
         "total_comment_count": len(issue_comments or []) + len(review_comments or []),
         "participants": sorted(participants),
+        "comments": comments,  # новое поле с текстами комментариев
     }
 
 
