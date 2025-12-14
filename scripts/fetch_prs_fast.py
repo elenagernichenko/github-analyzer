@@ -11,7 +11,7 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import requests
 
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "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")
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
 
 session = requests.Session()
 session.headers.update({
