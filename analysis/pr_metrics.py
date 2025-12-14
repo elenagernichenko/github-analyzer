@@ -219,6 +219,7 @@ def build_summary(pr_dicts: List[Dict], metrics: Dict[str, float]) -> str:
 
 
 def main() -> None:
+    global OWNER, REPO
     parser = argparse.ArgumentParser(description="Fetch PR samples via MCP")
     parser.add_argument("--days-back", type=int, default=DAYS_BACK, help="Сколько дней назад смотреть PR")
     parser.add_argument("--sample-size", type=int, default=SAMPLE_SIZE, help="Сколько PR запросить")
@@ -228,7 +229,11 @@ def main() -> None:
         default=None,
         help="Путь для сохранения JSON (по умолчанию data/pr_samples.json)",
     )
+    parser.add_argument("--owner", type=str, default=OWNER, help="Владелец репозитория")
+    parser.add_argument("--repo", type=str, default=REPO, help="Репозиторий")
     args = parser.parse_args()
+
+    OWNER, REPO = args.owner, args.repo
 
     start_day = datetime.now(timezone.utc).date() - timedelta(days=args.days_back)
     collected_at = datetime.now(timezone.utc)
