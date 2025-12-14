@@ -5,6 +5,7 @@ Calculate social-technical PR metrics for catboost repo via GitHub MCP Server.
 from __future__ import annotations
 
 import json
+import argparse
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -94,20 +95,31 @@ class PRRecord:
         return min(timestamps) if timestamps else None
 
 
-def fetch_pr_items(session: MCPDockerSession, start: date) -> Sequence[Dict]:
+def fetch_pr_items(session: MCPDockerSession, start: date, sample_size: int) -> Sequence[Dict]:
     query = f"repo:{OWNER}/{REPO} comments:>0 created:>={start.isoformat()}"
-    response = session.call_tool(
-        "search_pull_requests",
-        {
-            "query": query,
-            "sort": "created",
-            "order": "desc",
-            "perPage": SAMPLE_SIZE,
-        },
-    )
-    payload = extract_text_content(response)
-    data = json.loads(payload)
-    return data.get("items", [])
+    items: list[Dict] = []
+    per_page = min(100, sample_size)
+    pages = (sample_size + per_page - 1) // per_page
+
+    for page in range(1, pages + 1):
+        response = session.call_tool(
+            "search_pull_requests",
+            {
+                "query": query,
+                "sort": "created",
+                "order": "desc",
+                "perPage": per_page,
+                "page": page,
+            },
+        )
+        payload = extract_text_content(response)
+        data = json.loads(payload)
+        items.extend(data.get("items", []))
+        if len(items) >= sample_size:
+            break
+        if not data.get("items"):
+            break
+    return items[:sample_size]
 
 
 def fetch_pr_record(session: MCPDockerSession, number: int) -> PRRecord:
@@ -207,12 +219,23 @@ def build_summary(pr_dicts: List[Dict], metrics: Dict[str, float]) -> str:
 
 
 def main() -> None:
-    start_day = datetime.now(timezone.utc).date() - timedelta(days=DAYS_BACK)
+    parser = argparse.ArgumentParser(description="Fetch PR samples via MCP")
+    parser.add_argument("--days-back", type=int, default=DAYS_BACK, help="Сколько дней назад смотреть PR")
+    parser.add_argument("--sample-size", type=int, default=SAMPLE_SIZE, help="Сколько PR запросить")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=None,
+        help="Путь для сохранения JSON (по умолчанию data/pr_samples.json)",
+    )
+    args = parser.parse_args()
+
+    start_day = datetime.now(timezone.utc).date() - timedelta(days=args.days_back)
     collected_at = datetime.now(timezone.utc)
     pr_dicts: List[Dict] = []
 
     with MCPDockerSession(env_file=ENV_FILE) as session:
-        items = fetch_pr_items(session, start_day)[:SAMPLE_SIZE]
+        items = fetch_pr_items(session, start_day, sample_size=args.sample_size)[: args.sample_size]
         for item in items:
             record = fetch_pr_record(session, item["number"])
             pr_dicts.append(record.to_dict(collected_at))
@@ -226,7 +249,7 @@ def main() -> None:
         "sample_size": len(pr_dicts),
         "prs": pr_dicts,
     }
-    raw_path = DATA_DIR / "pr_samples.json"
+    raw_path = args.output or DATA_DIR / "pr_samples.json"
     raw_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
 
     metrics = aggregate_metrics(pr_dicts)
